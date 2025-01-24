@@ -13,7 +13,7 @@
 
 
 
-<title>LLM PPO | Hexo</title>
+<title>Deepseek系列 | Hexo</title>
 
 
 
@@ -164,76 +164,11 @@
                 <div class="container">
     
     
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Back to top</a>
-        <a onclick="go_bottom()">Go to bottom</a>
-    </div>
-</div>
-
-<script>
-    var tocbot_timer;
-    var DEPTH_MAX = 6; // 为 6 时展开所有
-    var tocbot_default_config = {
-        tocSelector: '.tocbot-list',
-        contentSelector: '.post-content',
-        headingSelector: 'h1, h2, h3, h4, h5',
-        orderedList: false,
-        scrollSmooth: true,
-        onClick: extend_click,
-    };
-
-    function extend_click() {
-        clearTimeout(tocbot_timer);
-        tocbot_timer = setTimeout(function() {
-            tocbot.refresh(obj_merge(tocbot_default_config, {
-                hasInnerContainers: true
-            }));
-        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
-    }
-
-    document.ready(function() {
-        tocbot.init(obj_merge(tocbot_default_config, {
-            collapseDepth: 1
-        }));
-    });
-
-    function expand_toc() {
-        var b = document.querySelector('.tocbot-toc-expand');
-        var expanded = b.getAttribute('data-expanded');
-        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
-        tocbot.refresh(obj_merge(tocbot_default_config, {
-            collapseDepth: expanded ? 1 : DEPTH_MAX
-        }));
-        b.innerText = expanded ? 'Expand all' : 'Collapse all';
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    function obj_merge(target, source) {
-        for (var item in source) {
-            if (source.hasOwnProperty(item)) {
-                target[item] = source[item];
-            }
-        }
-        return target;
-    }
-</script>
-    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LLM PPO</h1>
+            <h1 class="post-title">Deepseek系列</h1>
             
                 <div class="post-meta">
                     
@@ -242,25 +177,16 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">January 22, 2025&nbsp;&nbsp;16:32:48</a>
+                        Date: <a href="#">January 24, 2025&nbsp;&nbsp;16:03:56</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/LLM/">LLM</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h1 id="PPO推导"><a href="#PPO推导" class="headerlink" title="PPO推导"></a>PPO推导</h1><p>$$</p>
-<p>$$</p>
-<h1 id="LLM中的PPO"><a href="#LLM中的PPO" class="headerlink" title="LLM中的PPO"></a>LLM中的PPO</h1>
+            
         </div>
 
         
@@ -274,7 +200,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://example.com/2025/01/22/LLM-PPO/">http://example.com/2025/01/22/LLM-PPO/</a></span>
+                        <span><a href="http://example.com/2025/01/24/Deepseek%E7%B3%BB%E5%88%97/">http://example.com/2025/01/24/Deepseek%E7%B3%BB%E5%88%97/</a></span>
                     </p>
                 
                 
@@ -297,14 +223,6 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/LLM/"># LLM</a>
-                    
-                        <a href="/tags/RL/"># RL</a>
-                    
-                        <a href="/tags/PPO/"># PPO</a>
-                    
-                        
                 </span>
             </div>
             <div>
@@ -315,10 +233,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2025/01/24/Deepseek%E7%B3%BB%E5%88%97/">Deepseek系列</a>
+                <a class="prev" rel="prev" href="/2025/01/24/Qwen%E7%B3%BB%E5%88%97/">Qwen系列</a>
             
             
-            <a class="next" rel="next" href="/2025/01/22/LLM-Post-Training/">LLM Post-Training</a>
+            <a class="next" rel="next" href="/2025/01/22/LLM-PPO/">LLM PPO</a>
             
         </section>
 
