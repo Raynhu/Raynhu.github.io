@@ -13,7 +13,7 @@
 
 
 
-<title>LLM Post-Training | Hexo</title>
+<title>RLOO | Hexo</title>
 
 
 
@@ -233,7 +233,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LLM Post-Training</h1>
+            <h1 class="post-title">RLOO</h1>
             
                 <div class="post-meta">
                     
@@ -242,105 +242,29 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">January 22, 2025&nbsp;&nbsp;16:27:41</a>
+                        Date: <a href="#">February 5, 2025&nbsp;&nbsp;16:29:44</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/LLM/">LLM</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h1 id="Continual-Pretrain-Papaer-List"><a href="#Continual-Pretrain-Papaer-List" class="headerlink" title="Continual Pretrain Papaer List"></a>Continual Pretrain Papaer List</h1><table>
-<thead>
-<tr>
-<th>Title</th>
-<th>类型</th>
-<th>Content</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2406.01375">D-CPT Law: Domain-specific Continual Pre-Training Scaling Law for Large Language Models</a></td>
-<td>CPT-数据配比</td>
-<td>预测最优CPT配比，探究跨Domain最优数据配比<br />1.平衡通用和领域能力最优配比 Dataset 10B，Model Size 1.8B &#x3D;&gt; 最佳领域语料库配比 0.924<br />2. 领域能力最优配比 Model 1.8B，Dataset 5B &#x3D;&gt; 最佳混合比0.732<br />3.跨域配比 引入K作为训练集的领域可学习系数</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2407.17467">CMR Scaling Law: Predicting Critical Mixture Ratios for Continual Pre-training of Language Models</a></td>
-<td>CPT-数据配比</td>
-<td>探究CPT阶段是具有最优数据配比的<br />1.模型越大，领域：通用数据配比可以越大<br />2.CPT过程中领域内损失会快速减小，而通用损失会先增大后减小，数据配比越大减小的越慢<br />3.目标域和通用域之间的分布差距越小，最优数据配比越大</td>
-</tr>
-</tbody></table>
-<h1 id="Reasoning-Paper-List"><a href="#Reasoning-Paper-List" class="headerlink" title="Reasoning Paper List"></a>Reasoning Paper List</h1><table>
-<thead>
-<tr>
-<th>Title</th>
-<th>类型</th>
-<th>Content</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>rStar-Math</td>
-<td></td>
-<td>rStar-Math，通过小模型和MCTS实现了自我演化 <br />1.基于python code和MCTS的CoT数据合成<br />2.使用SLM（小模型）作为过程偏好模型<br />3.four-round自我演化算法<br /></td>
-</tr>
-<tr>
-<td>Deepseek-V3</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Deepseek-R1</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+            <h1 id="RLOO核心思想"><a href="#RLOO核心思想" class="headerlink" title="RLOO核心思想"></a>RLOO核心思想</h1><p>PPO方案中，每个token被建模为一个action，每个step的sequence都被视为一个state，RLOO认为partial seq的建模是不必要的，奖励只需要归于full generations，将full generations视为单一action，init state由prompt决定，和GRPO的核心思想类似，区别在于是否使用留一法处理采样</p>
+<p>RLOO</p>
+<ul>
+<li>始终优于PPO</li>
+<li>可以使用多个online sample，同时对噪声和KL惩罚的鲁棒性更高</li>
+<li>性能优势，复杂度低</li>
+</ul>
+<img src="../../../../../../Library/Application Support/typora-user-images/截屏2025-02-05 16.35.24.png" alt="截屏2025-02-05 16.35.24" style="zoom:50%;" />
+
+<h2 id="PPO"><a href="#PPO" class="headerlink" title="PPO"></a>PPO</h2><ul>
+<li><EOS> token获得RM奖励 + KL惩罚</li>
+<li>其他token获得KL惩罚</li>
+</ul>
+<h2 id="RLOO"><a href="#RLOO" class="headerlink" title="RLOO"></a>RLOO</h2><p>$\frac{1}{}$</p>
 
         </div>
 
@@ -355,7 +279,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://example.com/2025/01/22/LLM-Post-Training/">http://example.com/2025/01/22/LLM-Post-Training/</a></span>
+                        <span><a href="http://example.com/2025/02/05/RLOO/">http://example.com/2025/02/05/RLOO/</a></span>
                     </p>
                 
                 
@@ -378,12 +302,6 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/LLM/"># LLM</a>
-                    
-                        <a href="/tags/Post-Training/"># Post-Training</a>
-                    
-                        
                 </span>
             </div>
             <div>
@@ -394,10 +312,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2025/01/22/LLM-PPO/">LLM PPO</a>
+                <a class="prev" rel="prev" href="/2025/02/11/%E6%9A%91%E6%9C%9F%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86/">Summer Intern面经整理</a>
             
             
-            <a class="next" rel="next" href="/2025/01/22/hello-world/">Hello World</a>
+            <a class="next" rel="next" href="/2025/01/25/MLLM%E5%AD%A6%E4%B9%A0/">MLLM学习</a>
             
         </section>
 

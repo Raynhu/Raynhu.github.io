@@ -13,7 +13,7 @@
 
 
 
-<title>LLM Post-Training | Hexo</title>
+<title>Summer Intern面经整理 | Hexo</title>
 
 
 
@@ -233,7 +233,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LLM Post-Training</h1>
+            <h1 class="post-title">Summer Intern面经整理</h1>
             
                 <div class="post-meta">
                     
@@ -242,105 +242,33 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">January 22, 2025&nbsp;&nbsp;16:27:41</a>
+                        Date: <a href="#">February 11, 2025&nbsp;&nbsp;16:08:47</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/LLM/">LLM</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h1 id="Continual-Pretrain-Papaer-List"><a href="#Continual-Pretrain-Papaer-List" class="headerlink" title="Continual Pretrain Papaer List"></a>Continual Pretrain Papaer List</h1><table>
-<thead>
-<tr>
-<th>Title</th>
-<th>类型</th>
-<th>Content</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2406.01375">D-CPT Law: Domain-specific Continual Pre-Training Scaling Law for Large Language Models</a></td>
-<td>CPT-数据配比</td>
-<td>预测最优CPT配比，探究跨Domain最优数据配比<br />1.平衡通用和领域能力最优配比 Dataset 10B，Model Size 1.8B &#x3D;&gt; 最佳领域语料库配比 0.924<br />2. 领域能力最优配比 Model 1.8B，Dataset 5B &#x3D;&gt; 最佳混合比0.732<br />3.跨域配比 引入K作为训练集的领域可学习系数</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2407.17467">CMR Scaling Law: Predicting Critical Mixture Ratios for Continual Pre-training of Language Models</a></td>
-<td>CPT-数据配比</td>
-<td>探究CPT阶段是具有最优数据配比的<br />1.模型越大，领域：通用数据配比可以越大<br />2.CPT过程中领域内损失会快速减小，而通用损失会先增大后减小，数据配比越大减小的越慢<br />3.目标域和通用域之间的分布差距越小，最优数据配比越大</td>
-</tr>
-</tbody></table>
-<h1 id="Reasoning-Paper-List"><a href="#Reasoning-Paper-List" class="headerlink" title="Reasoning Paper List"></a>Reasoning Paper List</h1><table>
-<thead>
-<tr>
-<th>Title</th>
-<th>类型</th>
-<th>Content</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>rStar-Math</td>
-<td></td>
-<td>rStar-Math，通过小模型和MCTS实现了自我演化 <br />1.基于python code和MCTS的CoT数据合成<br />2.使用SLM（小模型）作为过程偏好模型<br />3.four-round自我演化算法<br /></td>
-</tr>
-<tr>
-<td>Deepseek-V3</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Deepseek-R1</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+            <h2 id="淘天未来生活实验室"><a href="#淘天未来生活实验室" class="headerlink" title="淘天未来生活实验室"></a>淘天未来生活实验室</h2><h3 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h3><ol>
+<li>自我介绍</li>
+<li>介绍一下口语化的流程，数据集大小，如何构造，为什么用Qwen不用混元？</li>
+<li>如何评估？如何迭代？</li>
+<li>有哪些微调方式，Lora了解吗？Adaptor放在哪里？</li>
+<li>为什么要用RLOO？和PPO比有什么优势，Reward怎么构造？</li>
+<li>介绍一下PPO，DPO，GRPO等等？有什么异同？</li>
+<li>介绍一下Cpt的数据大小，为什么要混入通用数据？怎么配比？</li>
+<li>Cpt和Pretrain的区别？用了多少张卡，训练了多久</li>
+<li>介绍一下RAG的项目，检索的数据准确性？具体场景？</li>
+<li>介绍一下Encoder-Decoder的异同</li>
+<li>位置编码，相对、绝对，RoPE，有什么好处？</li>
+<li>常见Tokenizer有哪些，subword分词有什么好处？</li>
+<li>Transformer中包含哪些块？MLP，Attention，Embedding，LayerNorm？</li>
+<li>Attention计算流程，QKV如何得到？</li>
+<li>Code：手写MLP以及训练过程</li>
+<li>到岗时间？</li>
+</ol>
 
         </div>
 
@@ -355,7 +283,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://example.com/2025/01/22/LLM-Post-Training/">http://example.com/2025/01/22/LLM-Post-Training/</a></span>
+                        <span><a href="http://example.com/2025/02/11/%E6%9A%91%E6%9C%9F%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86/">http://example.com/2025/02/11/%E6%9A%91%E6%9C%9F%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86/</a></span>
                     </p>
                 
                 
@@ -378,12 +306,6 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/LLM/"># LLM</a>
-                    
-                        <a href="/tags/Post-Training/"># Post-Training</a>
-                    
-                        
                 </span>
             </div>
             <div>
@@ -394,10 +316,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2025/01/22/LLM-PPO/">LLM PPO</a>
             
-            
-            <a class="next" rel="next" href="/2025/01/22/hello-world/">Hello World</a>
+            <a class="next" rel="next" href="/2025/02/05/RLOO/">RLOO</a>
             
         </section>
 

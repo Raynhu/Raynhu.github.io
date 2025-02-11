@@ -164,6 +164,71 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
 
     
     <article class="post-wrap">
@@ -186,7 +251,58 @@
         </header>
 
         <div class="post-content">
-            
+            <h3 id="PPO-Trainer"><a href="#PPO-Trainer" class="headerlink" title="PPO Trainer"></a>PPO Trainer</h3><h3 id="RLOO"><a href="#RLOO" class="headerlink" title="RLOO"></a>RLOO</h3><h3 id="DPO推导"><a href="#DPO推导" class="headerlink" title="DPO推导"></a>DPO推导</h3><p>off-policy</p>
+<h3 id="KTO"><a href="#KTO" class="headerlink" title="KTO"></a>KTO</h3><h3 id="RLHF-PPO"><a href="#RLHF-PPO" class="headerlink" title="RLHF-PPO"></a>RLHF-PPO</h3><h4 id="Reward模型训练"><a href="#Reward模型训练" class="headerlink" title="Reward模型训练"></a>Reward模型训练</h4><p>用户偏好数据</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;question&quot;</span><span class="punctuation">:</span> <span class="string">&quot;什么是数据库?&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;chosen&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;rejected&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新增Score Head，只对最后一个Token作用</li>
+</ul>
+<p>$Loss &#x3D; -logsigmod(chosen - rejected)$</p>
+<p>$Loss &#x3D; -log (\frac{1}{1 + e^{-x}}) _{x &#x3D; chosen - rejected}$</p>
+<h4 id="PPO详解"><a href="#PPO详解" class="headerlink" title="PPO详解"></a>PPO详解</h4><p><img src="https://s2.loli.net/2025/02/10/1hZJM6sLjQEXrmp.png" alt="PPO Models"></p>
+<ul>
+<li>基准模型 Reference LLM<ul>
+<li>LLM Head: hidden_size * vocab_size</li>
+</ul>
+</li>
+<li>训练模型 Active LLM<ul>
+<li>LM Head: hidden_size * vocab_size</li>
+</ul>
+</li>
+<li>奖励模型 Reward LLM<ul>
+<li>Score Head: hidden_size * 1</li>
+</ul>
+</li>
+<li>状态价值模型 State-Value Model<ul>
+<li>Value Head: hidden_size * 1</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2025/02/10/3NseSpPyzBaH5fW.png" alt="LLM+Adaptor"></p>
+<p>为了减少内存开销，可以优化成一个LLM Model，加上两个Adapter的形式来进行PPO训练</p>
+<h5 id="Reward计算"><a href="#Reward计算" class="headerlink" title="Reward计算"></a>Reward计算</h5><p><img src="https://s2.loli.net/2025/02/10/PdrlnG32QzRsVmD.png" alt="image-20250210222618883"></p>
+<p>每个token生成都会计算reference model和active model的kl散度作为惩罚，同时最后一个token会有对应的score，两者结合得到每一步step的reward</p>
+<h5 id="State-Value-Loss"><a href="#State-Value-Loss" class="headerlink" title="State Value Loss"></a>State Value Loss</h5><p>状态价值网络用于拟合每个token的状态价值，一般采用GAE广义优势法（平衡了方差和偏差）</p>
+<h5 id="PPO-Loss"><a href="#PPO-Loss" class="headerlink" title="PPO Loss"></a>PPO Loss</h5><ol>
+<li>纪念性重要性采样的模型可以不同于参考模型</li>
+<li>KL散度在Reward中已经体现</li>
+</ol>
+<p>$\theta$: 训练模型</p>
+<p>$\theta’$: 基准模型</p>
+<p>$\theta’’$: 重要性采样模型，训练中逐步更新，始终和训练模型差距不大<br>$$<br>Loss_{ppo} &#x3D; - \frac{1}{N}\Sigma_{n&#x3D;1}^{N}\Sigma_{t&#x3D;1}^{T_n} A_^{GAE} (s_n^t, a_n^t) \frac{P_\theta (a_n^t | s_n^t)}{P_{\theta’’}(a_n^t|s_n^t)}<br>$$</p>
+<h5 id="train-loop"><a href="#train-loop" class="headerlink" title="train loop"></a>train loop</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">伪代码</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> batch_prompt <span class="keyword">in</span> prompt_dataset:</span><br><span class="line">    batch_response = active_model.generate(batch_prompt)</span><br><span class="line">    batch_data = concat(batch_prompt, batch_response)</span><br><span class="line">    batch_scores = reward_model(batch_data) <span class="comment"># reward model给qa对生成score</span></span><br><span class="line">    </span><br><span class="line">    batch_all_probs, batch_probs, batch_all_values = active_model.forward_pass(batch_data) <span class="comment"># active model生成每一step的token词表概率分布、输出token的概率、每个token的状态价值</span></span><br><span class="line">    ref_all_probs, ref_probs, ref_all_values = ref_model.forward_pass(batch_data) <span class="comment"># ref model生成词表概率分布、输出token的概率、每个token的状态价值</span></span><br><span class="line">    kls = compute_KL(batch_all_probs, ref_all_probs) <span class="comment"># 计算基准模型和训练模型的kl散度</span></span><br><span class="line">    rewards = compute_rewards(batch_scores, kls) <span class="comment"># 由kl散度和score得出rewards</span></span><br><span class="line">   	advantges = compute_adv(batch_all_values, rewards) <span class="comment"># 根据rewards和每一步token概率分布生成优势函数</span></span><br><span class="line">    returns = advantages + batch_all_values <span class="comment"># gae优势 + 状态价值 = return值</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(epoch):</span><br><span class="line">        active_all_probs, active_probs, active_all_values = active_model.forward_pass(batch_data) <span class="comment"># active model生成每一step的token词表概率分布、输出token的概率、每个token的状态价值</span></span><br><span class="line">        </span><br><span class="line">        loss_state_value = torch.mean((returns - active_all_values) ** <span class="number">2</span>) <span class="comment"># 根据returns 和 active model估计的状态价值计算loss，用于更近状态价值网络</span></span><br><span class="line">        ratio = active_probs / batch_probs <span class="comment"># 两个分布之间的采样系数</span></span><br><span class="line">        loss_ppo = torch.mean(-advantages * ratio) <span class="comment"># 计算ppo loss，目标是最大化最终的return，和上面的loss ppo公式一致</span></span><br><span class="line">        loss = loss_ppo + value_loss_rate * loss_state_value <span class="comment"># ppo loss + 状态价值网络的loss = 最终loss</span></span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h4 id="Deepseek-V3"><a href="#Deepseek-V3" class="headerlink" title="Deepseek V3"></a>Deepseek V3</h4><h4 id="Deepseek-R1"><a href="#Deepseek-R1" class="headerlink" title="Deepseek R1"></a>Deepseek R1</h4><h4 id="Kimi1-5"><a href="#Kimi1-5" class="headerlink" title="Kimi1.5"></a>Kimi1.5</h4><h3 id="简历项目"><a href="#简历项目" class="headerlink" title="简历项目"></a>简历项目</h3><h4 id="参数、配置"><a href="#参数、配置" class="headerlink" title="参数、配置"></a>参数、配置</h4><h3 id="面经整理"><a href="#面经整理" class="headerlink" title="面经整理"></a>面经整理</h3><ul>
+<li>SFT复读机问题<ul>
+<li>数据多样性</li>
+<li>RLHF解决负样本</li>
+</ul>
+</li>
+<li>DPO训练时 chosen和rejected的reward同时下降</li>
+<li></li>
+</ul>
+
         </div>
 
         
